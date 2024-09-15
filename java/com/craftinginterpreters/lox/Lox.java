@@ -6,9 +6,11 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
+
 
 class Lox {
-    static Boolean hadError = false;
+    static boolean hadError = false;
 
     public static void main(String[] args) throws IOException {
         if (args.length > 1) {
@@ -44,8 +46,13 @@ class Lox {
         }
     }
 
-    private static void run(String program) {
-        //TODO
+    private static void run(String source) {
+        Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();
+
+        for (Token token : tokens) {
+            System.out.println(token);
+        }
     }
 
     static void error(int line, String message) {
