@@ -1,15 +1,20 @@
 #include "vm.h"
 #include "chunk.h"
 #include "common.h"
+#include "compiler.h"
 #include "debug.h"
 #include "value.h"
 #include <stdio.h>
 
 VM vm;
 
-static void resetStack() { vm.stackTop = vm.stack; }
+static void resetStack() {
+  vm.stackTop = vm.stack;
+}
 
-void initVM() { resetStack(); }
+void initVM() {
+  resetStack();
+}
 
 void freeVM() {}
 
@@ -41,21 +46,11 @@ static InterpretResult run() {
 	  push(constant);
 	  break;
 	}
-	case OP_ADD:
-	  BINARY_OP(+);
-	  break;
-	case OP_SUBTRACT:
-	  BINARY_OP(-);
-	  break;
-	case OP_MULTIPLY:
-	  BINARY_OP(*);
-	  break;
-	case OP_DIVIDE:
-	  BINARY_OP(/);
-	  break;
-	case OP_NEGATE:
-	  push(-pop());
-	  break;
+	case OP_ADD: BINARY_OP(+); break;
+	case OP_SUBTRACT: BINARY_OP(-); break;
+	case OP_MULTIPLY: BINARY_OP(*); break;
+	case OP_DIVIDE: BINARY_OP(/); break;
+	case OP_NEGATE: push(-pop()); break;
 
 	case OP_RETURN: {
 	  printValue(pop());
@@ -70,10 +65,9 @@ static InterpretResult run() {
 #undef BINARY_OP
 }
 
-InterpretResult interpret(Chunk* chunk) {
-  vm.chunk = chunk;
-  vm.ip = vm.chunk->code;
-  return run();
+InterpretResult interpret(const char* source) {
+  compile(source);
+  return INTERPRET_OK;
 }
 
 void push(Value value) {

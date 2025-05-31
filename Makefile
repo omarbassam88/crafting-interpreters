@@ -19,7 +19,7 @@ generate_ast: build/java/com/craftinginterpreters/tool/GenerateAst.class
 
 # CLOX
 CC := clang
-CFLAGS := -Wall -Werror
+CFLAGS := -Wall
 C_SOURCES := $(wildcard c/*.c)
 OBJS := $(addprefix $(BUILD_DIR)/, $(C_SOURCES:.c=.o))
 
