@@ -82,11 +82,11 @@ static void skipWhitespace() {
       break;
     case '/':
       if (peekNext() == '/') {
-	// A comment goes until the end of the line.
-	while (peek() != '\n' && !isAtEnd())
-	  advance();
+        // A comment goes until the end of the line.
+        while (peek() != '\n' && !isAtEnd())
+          advance();
       } else {
-	return;
+        return;
       }
       break;
     default: return;
@@ -95,7 +95,7 @@ static void skipWhitespace() {
 }
 
 static TokenType checkKeyword(int start, int length, const char* rest,
-			      TokenType type) {
+                              TokenType type) {
   if (scanner.current - scanner.start == start + length &&
       memcmp(scanner.start + start, rest, length) == 0) {
     return type;
