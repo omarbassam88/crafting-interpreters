@@ -30,6 +30,9 @@ $(BUILD_DIR)/c/%.o: c/%.c
 	mkdir -p $(BUILD_DIR)/c
 	$(CC) -c $(CFLAGS) $< -o $@
 
+format: $(C_SOURCES)
+	clang-format -i $^
+
 # COMMON
 
 clean:
